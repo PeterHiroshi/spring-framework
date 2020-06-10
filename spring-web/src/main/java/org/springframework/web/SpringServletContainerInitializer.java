@@ -167,6 +167,8 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 		}
 
 		servletContext.log(initializers.size() + " Spring WebApplicationInitializers detected on classpath");
+		// if the {org.springframework.core.annotation.Order @Order} annotation is present or
+		// the {@link org.springframework.core.Ordered Ordered} interface has been implemented
 		AnnotationAwareOrderComparator.sort(initializers);
 		for (WebApplicationInitializer initializer : initializers) {
 			initializer.onStartup(servletContext);
