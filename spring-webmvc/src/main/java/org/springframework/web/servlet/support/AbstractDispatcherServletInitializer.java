@@ -60,7 +60,12 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		// step1： 创建一个空的父容器，把我们的父配置类（自己写的）保存到父容器中；
+		// step2： 创建一个ContextLoaderListener对象，并注册到servletContext中
 		super.onStartup(servletContext);
+		// 注册我们的前端器对象
+		// step1： 创建一个空的子容器，把我们的自配置类保存到子容器中
+		// step2： 创建一个DispatcherServlet对象，并注册到servletContext中
 		registerDispatcherServlet(servletContext);
 	}
 
