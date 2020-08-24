@@ -60,10 +60,11 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		// 实例化我们的spring root上下文
 		// step1： 创建一个空的父容器，把我们的父配置类（自己写的）保存到父容器中；
 		// step2： 创建一个ContextLoaderListener对象，并注册到servletContext中
 		super.onStartup(servletContext);
-		// 注册我们的前端器对象
+		// 注册我们的前端器对象；创建我们的spring web上下文对象
 		// step1： 创建一个空的子容器，把我们的自配置类保存到子容器中
 		// step2： 创建一个DispatcherServlet对象，并注册到servletContext中
 		registerDispatcherServlet(servletContext);
@@ -84,9 +85,11 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 		String servletName = getServletName();
 		Assert.hasLength(servletName, "getServletName() must not return null or empty");
 
+		// create WebApplicationContext object （创建子容器）
 		WebApplicationContext servletAppContext = createServletApplicationContext();
 		Assert.notNull(servletAppContext, "createServletApplicationContext() must not return null");
 
+		// create our DispatcherServlet object (tomcat会对DispatcherServlet进行生命周期管理）
 		FrameworkServlet dispatcherServlet = createDispatcherServlet(servletAppContext);
 		Assert.notNull(dispatcherServlet, "createDispatcherServlet(WebApplicationContext) must not return null");
 		dispatcherServlet.setContextInitializers(getServletApplicationContextInitializers());
@@ -97,7 +100,9 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 					"Check if there is another servlet registered under the same name.");
 		}
 
+		// set properties of our dispatcherServlet
 		registration.setLoadOnStartup(1);
+		// getServletMappings是我们自己需要去实现的，相当于web.xml中的<servlet-mapping>
 		registration.addMapping(getServletMappings());
 		registration.setAsyncSupported(isAsyncSupported());
 
