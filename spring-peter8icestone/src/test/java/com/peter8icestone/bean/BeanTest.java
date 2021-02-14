@@ -24,4 +24,21 @@ public class BeanTest {
 		TestBean testBean = classPathXmlApplicationContext.getBean(TestBean.class);
 		System.out.println(testBean);
 	}
+
+	@Test
+	public void testAop() {
+		ApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		SimpleBean simpleBean = classPathXmlApplicationContext.getBean(SimpleBean.class);
+		simpleBean.print();
+	}
+
+	@Test
+	public void testAutoWired() {
+		ApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+		TestBean testBean = classPathXmlApplicationContext.getBean(TestBean.class);
+		testBean.getSimpleBean().print();
+		DemoBean demoBean = classPathXmlApplicationContext.getBean(DemoBean.class);
+		demoBean.print();
+	}
+
 }

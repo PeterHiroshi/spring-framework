@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-        https://www.springframework.org/schema/beans/spring-beans.xsd">
+	   xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd"
+>
+	<context:component-scan base-package="com.peter8icestone.bean" />
 
-	<bean id="testBean" class="com.peter8icestone.bean.TestBean" lazy-init="true" />
-	<bean id="myBeanFactoryPostProcessor" class="com.peter8icestone.bean.MyBeanFactoryPostProcessor" />
-	<bean id="myBeanPostProcessor" class="com.peter8icestone.bean.MyBeanPostProcessor" />
+	<bean id="testBean" class="com.peter8icestone.bean.TestBean">
+		<property name="simpleBean" ref="simpleBean" />
+	</bean>
+	<!--<bean id="testBean" class="com.peter8icestone.bean.TestBean" lazy-init="true" />-->
+	<!--<bean id="myBeanFactoryPostProcessor" class="com.peter8icestone.bean.MyBeanFactoryPostProcessor" />-->
+	<!--<bean id="myBeanPostProcessor" class="com.peter8icestone.bean.MyBeanPostProcessor" />-->
+
+	<!--<bean id="logUtils" class="com.peter8icestone.utils.LogUtils" />-->
+
+	<!--<bean id="demoBean" class="com.peter8icestone.bean.DemoBean" />-->
+	<!--<bean id="simpleBean" class="com.peter8icestone.bean.SimpleBean" />-->
+
+	<!--<aop:config>-->
+		<!--<aop:aspect ref="logUtils">-->
+			<!--<aop:before method="beforeMethod" pointcut="execution(public void com.peter8icestone.bean.SimpleBean.print())" />-->
+		<!--</aop:aspect>-->
+	<!--</aop:config>-->
 </beans>
